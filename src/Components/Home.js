@@ -26,6 +26,7 @@ class home extends Component {
             this.createfolderv2 = this.createfolderv2.bind(this);
             this.DeleteArg = this.DeleteArg.bind(this);
             this.ikon = this.ikon.bind(this);
+            this.onFav = this.onFav.bind(this);
 
 
 
@@ -36,7 +37,6 @@ class home extends Component {
     }
 
     componentDidUpdate(prevProps) {
-
         if (prevProps.location.pathname !== this.props.location.pathname) {
             const currentPath = this.props.location.pathname.slice(5);
             console.log(currentPath);
@@ -123,7 +123,7 @@ class home extends Component {
             }]
           })
           .then((response) =>{
-          let urlBlob = URL.createObjectURL(response.fileBlob);
+
 
           })
         }
@@ -236,6 +236,11 @@ class home extends Component {
             return <Link>{x.name}</Link>
         }
     }
+    onFav(x) {
+      console.log('ID',x);
+      localStorage.setItem('favorite', JSON.stringify(x));
+      console.log(localStorage)
+    }
     render() {
         let pointerstyle = {
             cursor: "pointer"
@@ -245,7 +250,7 @@ class home extends Component {
         return (
           <div className="main--home">
             <div className="path-container">
-              <h2>/home{this.state.mainpath.path}</h2>
+              <h2>Home{this.state.mainpath.path}</h2>
             </div>
             <table class="table">
               <thead>
@@ -272,7 +277,7 @@ class home extends Component {
                   return (
                     <tr>
                       <th scope="row">
-                        <i style={pointerstyle} className="far fa-star" />
+                        <i style={pointerstyle} onClick={()=>{this.onFav(x)}} className="far fa-star" />
                       </th>
                       <td scope="rownpm " class="portrait"> <img style={{ width: 50 }} alt="icon" src={thumbnail} /> </td>
                       <td>
